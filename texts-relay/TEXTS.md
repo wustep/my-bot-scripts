@@ -3,7 +3,7 @@
 **Texts** is an iMessage inbox and router Grok Bot. You text your Sendblue number, the message lands in a small Vercel inbox app, a puller on the box wakes Texts, and Texts hands the text to the right bot (your main assistant by default). It never replies on iMessage and never texts anyone. Any texts back to you come from your other bots, not Texts.
 
 How it fits with this repo:
-- [`texts-relay/`](texts-relay/) holds `pull.py` (drains `<INBOX_URL>/pull` every 5s by day and every 60s overnight, then wakes Texts through the box gateway), `start.sh` (reboot starter), and `relay.py` (legacy loopback receiver; `pull.py` imports its `handle()`).
+- [`texts-relay/`](README.md) holds `pull.py` (drains `<INBOX_URL>/pull` every 5s by day and every 60s overnight, then wakes Texts through the box gateway), `start.sh` (reboot starter), and `relay.py` (legacy loopback receiver; `pull.py` imports its `handle()`).
 - Run it from the Texts agent's own folder on the box, with `pull.url`, `pull.secret`, and `webhook.secret` kept beside it (gitignored).
 - Two routines keep it going: a webhook wake that drains and routes, and a 15-minute health check that restarts the puller and repairs Sendblue's receive webhook.
 
@@ -55,6 +55,6 @@ Never send iMessages. Never text anyone. Empty healthy runs stay silent.
 ## Setup: make your own Texts
 
 1. Get a Sendblue line and deploy a small inbox app that receives Sendblue's webhook at `/sendblue/receive`, queues messages, and serves `/pull` and `/health` behind a bearer secret.
-2. Copy [`texts-relay/`](texts-relay/) into the Texts agent's folder on the box. Put the inbox URL and bearer in `pull.url` / `pull.secret`, set `TEXTS_ALLOWED_NUMBERS=<YOUR_PHONE>` and `TEXTS_AGENT_ID=<TEXTS_AGENT_ID>`, and run `start.sh`.
+2. Copy [`texts-relay/`](README.md) into the Texts agent's folder on the box. Put the inbox URL and bearer in `pull.url` / `pull.secret`, set `TEXTS_ALLOWED_NUMBERS=<YOUR_PHONE>` and `TEXTS_AGENT_ID=<TEXTS_AGENT_ID>`, and run `start.sh`.
 3. Create a Grok Bot named Texts and paste the description above with your number, inbox host, and main bot filled in.
 4. Add the two routines above, with the routing table pointed at your own bots.

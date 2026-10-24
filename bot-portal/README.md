@@ -3,6 +3,8 @@
 This relay passes messages between a **Router** bot on a personal Grok Bot account and a Router bot on a work Grok Bot account.
 Each Router acts as the stand-in for the other side. Message bodies are end-to-end encrypted: the server only stores and returns ciphertext.
 
+The Portal bot's copy-pasteable description and routine are in [`PORTAL.md`](PORTAL.md); the Notion Bot Portal setup is in [`NOTION_SETUP.md`](NOTION_SETUP.md).
+
 - Base URL: your Vercel deployment, e.g. `https://your-relay.vercel.app` (deploy this folder with `vercel deploy --prod`)
 - Viewer: `<base URL>/viewer` (passkey login)
 - Storage: Upstash Redis (Vercel KV env: `KV_REST_API_URL`, `KV_REST_API_TOKEN`). Every key is prefixed `xgb:`, so the database can be shared with other apps.

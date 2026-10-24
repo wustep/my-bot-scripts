@@ -2,6 +2,8 @@
 
 Wakes a Grok Bot "Texts" agent when an iMessage arrives through Sendblue. A small Vercel inbox (not in this repo) receives Sendblue's webhook; `pull.py` drains it and wakes the agent through the box's local gateway.
 
+The Texts bot's copy-pasteable description and routines are in [`TEXTS.md`](TEXTS.md).
+
 - `pull.py`: polls the inbox URL in `pull.url` with the bearer in `pull.secret`. Poll cadence: **5s** by day, **60s** overnight (12am–7am in `TEXTS_TZ`) to stay under Upstash free-tier commands.
 - `start.sh`: starts the puller after a reboot (paths are relative to this folder).
 - `relay.py`: legacy loopback receiver (binds 127.0.0.1; put a tunnel in front). `pull.py` imports its `handle()`.

@@ -3,9 +3,9 @@
 **Portal** is a quiet switchboard Grok Bot. It relays messages between two sets of bots (for example, the bots on two different Grok Bot accounts) through a Notion page called **Bot Portal**: a Threads database and a Messages database, one row per message.
 
 How it fits with this repo:
-- [`bot-portal/`](bot-portal/) holds the Vercel receiver (`POST /api/notion-webhook`). Notion fires a webhook when a Messages row is created with Status = Pending. The receiver checks that the sender is a thread participant, POSTs the message to Portal's routine webhook with `to` = the recipients, and marks the row Delivered or Rejected.
+- [`bot-portal/`](README.md) holds the Vercel receiver (`POST /api/notion-webhook`). Notion fires a webhook when a Messages row is created with Status = Pending. The receiver checks that the sender is a thread participant, POSTs the message to Portal's routine webhook with `to` = the recipients, and marks the row Delivered or Rejected.
 - Portal never polls. It is woken by that POST, delivers the message to the `to` bot, and posts replies back as new Pending Messages rows.
-- The end-to-end-encrypted relay (`client/relay.mjs` + Router bots) is a separate option, described in [`bot-portal/README.md`](bot-portal/README.md) and [`bot-portal/SETUP.md`](bot-portal/SETUP.md).
+- The end-to-end-encrypted relay (`client/relay.mjs` + Router bots) is a separate option, described in [`bot-portal/README.md`](README.md) and [`bot-portal/SETUP.md`](SETUP.md).
 
 ## Bot description
 
@@ -47,9 +47,9 @@ The payload includes kind=bot-portal-message, message_id, thread_id, thread_page
 
 ## Setup: make your own Portal
 
-The full Notion walkthrough (database properties, integration, IDs, webhook verification, test message, troubleshooting) is in [`bot-portal/NOTION_SETUP.md`](bot-portal/NOTION_SETUP.md). In short:
+The full Notion walkthrough (database properties, integration, IDs, webhook verification, test message, troubleshooting) is in [`bot-portal/NOTION_SETUP.md`](NOTION_SETUP.md). In short:
 
 1. Create a Notion page "Bot Portal" with the Threads and Messages databases above, and a Notion integration connected **only** to that page. Save its token in a file on the box (e.g. `<PATH_TO_NOTION_TOKEN_FILE>`, chmod 600), never in chat or git.
-2. Deploy [`bot-portal/`](bot-portal/) and set the `NOTION_*` and `BOT_PORTAL_*` env vars from its README. Subscribe the Notion webhook to `page.created` and `page.properties_updated`.
+2. Deploy [`bot-portal/`](README.md) and set the `NOTION_*` and `BOT_PORTAL_*` env vars from its README. Subscribe the Notion webhook to `page.created` and `page.properties_updated`.
 3. Create a Grok Bot named Portal, paste the description above, and fill in your bot names, page URL, and data source ids. Save the full instructions file on the box.
 4. Give Portal a webhook-triggered routine and set `BOT_PORTAL_WEBHOOK_URL` / `BOT_PORTAL_WEBHOOK_AUTH` to that routine's URL and sender key. Add each bot's name as a Sender / Participants option in Notion.
