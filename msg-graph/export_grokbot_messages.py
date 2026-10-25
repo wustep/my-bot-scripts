@@ -4,7 +4,7 @@ Stdlib only. Read-only (opens SQLite with mode=ro).
 
 Rules: user-role rows from search-index.db; drop bot-to-bot messages (entries flagged
 fromAgent in each agent's store.db, plus bodies starting "You're live as"); unwrap
-iMessage relays (sendblue webhook / "[date] iMessage from <name>") and attribute them to
+iMessage relays (historical sendblue webhook format / "[date] iMessage from <name>") and attribute them to
 "iMessage relay"; dedupe identical normalized text within 10 minutes; days in MSG_GRAPH_TZ (default America/Los_Angeles).
 
 Speed: precompiled regexes; incremental cache seals complete past days and rescans from

@@ -52,7 +52,7 @@ Empty healthy runs stay silent.
 
 ## Setup: make your own Texts
 
-1. On a Mac always signed into Messages, install a chat.db watcher + Messages send CLI for one command-thread address (keep that address unchecked under that Mac’s Messages → Send & Receive if you see duplicate bubbles).
+1. On a Mac always signed into Messages, install a chat.db watcher + Messages send CLI for one command-thread address (keep that address unchecked under that Mac’s Messages → Send & Receive if you see duplicate bubbles). No third-party SMS host or BlueBubbles required for the command path.
 2. Grant Full Disk Access to the watcher app; store the Texts webhook URL/auth beside it (gitignored).
 3. Create a Grok Bot named Texts, paste the description and routines above with your placeholders filled in.
 4. Point every text digest routine at Texts (or the Mac send CLI), not a third-party SMS API.
