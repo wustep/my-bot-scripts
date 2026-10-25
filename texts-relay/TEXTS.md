@@ -6,15 +6,16 @@ How it fits:
 
 - **Live inbound:** Mac launchd watcher on the machine signed into Messages. Filter one command thread; allowlist senders fail-closed.
 - **Wake body:** JSON `{ "source": "mac-mini", "from_number", "content", "date_sent", "media_url" }` POSTed to Texts’ inbound-wake webhook.
-- **Live outbound:** Mac Messages send CLI into that same command thread (see your machine-config README). Never Sendblue.
-- **Org rule — digests / pings:** morning briefs, calendar digests, ride confirms, and any other SMS/iMessage-style routine must use this path. Prefer `SendToAgent` Texts with the body so Texts sends; owning bots may run the Mac send CLI themselves then log to Texts. Do not call a third-party SMS provider from those bots.
+- **Live outbound:** Mac Messages send CLI into that same command thread (Stephen: `texts-mac-send -- "<reply>"` on wuMini). Never Sendblue.
+- **Who calls:** Texts runs the Shell on the Mac. Other bots `SendToAgent` Texts with the body.
+- **Org rule — digests / pings:** morning briefs, calendar digests, ride confirms, and any other SMS/iMessage-style routine must hand the body to Texts. Do not call a third-party SMS provider from those bots.
 - **Texts** stays the router and preferred outbound sender for unsolicited digests.
 - **Retired:** Sendblue + a Vercel inbox + [`legacy-sendblue/`](legacy-sendblue/).
 
 ## Bot description
 
 ```text
-<OWNER>'s iMessage inbox and router. Stay tiny. Live inbound: Mac watcher wakes this chat on the <COMMAND_THREAD> thread (source mac-mini). Allow only <YOUR_PHONE> and <YOUR_EMAIL> (fail closed). Route to the right bot (default <MAIN_BOT>). Outbound (replies and digests): Mac Messages send into the same <COMMAND_THREAD> — never Sendblue. Prefer owning bots hand me the body via SendToAgent and I send. Empty runs stay silent. Do not grow memory, do not browse, do not take other work.
+<OWNER>'s iMessage inbox and router. Stay tiny. Live inbound: Mac watcher wakes this chat on the <COMMAND_THREAD> thread (source mac-mini). Allow only <YOUR_PHONE> and <YOUR_EMAIL> (fail closed). Route to the right bot (default <MAIN_BOT>). Outbound (replies and digests): I run the Mac send CLI into the same <COMMAND_THREAD> — never Sendblue. Owning bots SendToAgent me the body; I send. Empty runs stay silent. Do not grow memory, do not browse, do not take other work.
 ```
 
 ## Routines
