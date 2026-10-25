@@ -1,4 +1,5 @@
 #!/bin/bash
+# RETIRED 2026-10-24 — see ../TEXTS.md
 # Start the Texts puller after reboot. Secrets live beside this script (gitignored).
 set -euo pipefail
 RELAY_DIR="$(cd "$(dirname "$0")" && pwd)"
