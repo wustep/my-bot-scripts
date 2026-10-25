@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-"""Local Sendblue receive relay. Bind loopback only. Cloudflare Tunnel in front."""
+"""RETIRED 2026-10-24 — see ../TEXTS.md (Mac texts-mac-inbound is live).
+
+Local Sendblue receive relay. Bind loopback only. Cloudflare Tunnel in front."""
 from __future__ import annotations
 
 import hmac

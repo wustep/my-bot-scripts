@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-"""Drain the Vercel Sendblue inbox and wake Texts. Does not send iMessages."""
+"""RETIRED 2026-10-24 — see ../TEXTS.md (Mac texts-mac-inbound is live).
+
+Drain the Vercel Sendblue inbox and wake Texts. Does not send iMessages."""
 from __future__ import annotations
 
 import json
