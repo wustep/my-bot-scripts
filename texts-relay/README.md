@@ -1,24 +1,23 @@
 # texts-relay
 
-Docs and retired helpers for a **Texts** Grok Bot (iMessage inbox + router).
+Wakes a Grok Bot "Texts" agent when an iMessage arrives through Sendblue. A small Vercel inbox (not in this repo) receives Sendblue's webhook; `pull.py` drains it and wakes the agent through the box's local gateway.
 
-## Live path (Mac)
+The Texts bot's copy-pasteable description and routines are in [`TEXTS.md`](TEXTS.md).
 
-Inbound **and** outbound for the command thread run on a Mac signed into Messages (not this folder):
+- `pull.py`: polls the inbox URL in `pull.url` with the bearer in `pull.secret`. Poll cadence: **5s** by day, **60s** overnight (12am–7am in `TEXTS_TZ`) to stay under Upstash free-tier commands.
+- `start.sh`: starts the puller after a reboot (paths are relative to this folder).
+- `relay.py`: legacy loopback receiver (binds 127.0.0.1; put a tunnel in front). `pull.py` imports its `handle()`.
 
-- Poll `~/Library/Messages/chat.db` for a dedicated command thread (an iMessage address on the same Apple ID).
-- Fail-closed allowlist of sender numbers/emails.
-- `POST` the Texts bot’s webhook with `{ "source": "mac-mini", "from_number", "content", "date_sent", "media_url" }`.
-- Outbound (replies **and** digests/pings): Texts runs the Mac send CLI; other bots `SendToAgent` Texts with the body — **never Sendblue**.
-- Bot description and routines: [`TEXTS.md`](TEXTS.md)
+## Config
 
-Implement watch + send in your own machine-config repo (Stephen’s is `texts-mac-inbound` in [wustep/dotfiles](https://github.com/wustep/dotfiles)).
+| Env var | Required | Meaning |
+|---|---|---|
+| `TEXTS_ALLOWED_NUMBERS` | yes | Comma-separated E.164 numbers (e.g. `+15551234567`) whose iMessages may wake the agent. No default: if unset, every inbound message is ignored. |
+| `TEXTS_AGENT_ID` | yes | Grok Bot agent id to wake. |
+| `TEXTS_GATEWAY_PATH` | no | Gateway JSON with `token` and `port` (default `/home/box/agent-data/gateway.json`). |
+| `TEXTS_SENDER_NAME` | no | Name used in the wake prompt (default `Owner`). |
+| `TEXTS_TZ` | no | IANA time zone for timestamps and quiet hours (default `UTC`). |
 
-## This folder
+Local files (gitignored, kept beside the scripts): `webhook.secret`, `pull.url`, `pull.secret`, `seen.json`, `last-inbound.json`, `health-state.json`, logs and pids.
 
-| Path | Role |
-|------|------|
-| [`TEXTS.md`](TEXTS.md) | Copy-pasteable bot description + routines |
-| [`legacy-sendblue/`](legacy-sendblue/) | Retired Sendblue → Vercel inbox puller / loopback receiver |
-
-Do **not** commit secrets, phone numbers, wake tokens, pids, or logs.
+Never commit secrets, phone numbers, tunnel credentials, pids, or logs.

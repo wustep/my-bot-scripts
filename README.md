@@ -23,7 +23,7 @@ Copy-pasteable Grok Bot descriptions and routines for the bots behind two of the
 | Folder | What it does | Runtime |
 |--------|--------------|---------|
 | [`bot-portal/`](bot-portal/) | Vercel relay between a personal and a work bot account: end-to-end encrypted envelopes (AES-GCM + Ed25519), MCP endpoint, a Notion "Bot Portal" webhook router, and a passkey-gated viewer | Node 20, Vercel, Upstash Redis |
-| [`texts-relay/`](texts-relay/) | Texts bot docs; live wake is a Mac chat.db watcher (see TEXTS.md); `legacy-sendblue/` is retired | Python 3.11+ (legacy only) |
+| [`texts-relay/`](texts-relay/) | Texts bot docs; live wake is Sendblue → Vercel inbox → `pull.py` (see TEXTS.md) | Python 3.11+ |
 | [`saved-tweets/`](saved-tweets/) | Rewrites Notion "Saved Tweet" pages into author + embed + quote + media blocks via the Notion API | Python 3 |
 | [`capture-digest/`](capture-digest/) | Picks ~5 saved reading-list items for a digest (length mix, dead-link checks) | Python 3 |
 | [`course-export/`](course-export/) | Saves logged-in course pages from Arc to local HTML for offline reading | macOS, Arc |
@@ -40,7 +40,7 @@ Secrets and personal values never live in the code. Each project reads them from
 | Project | Env vars |
 |---------|----------|
 | `bot-portal` | `KV_REST_API_URL`, `KV_REST_API_TOKEN`, `RELAY_PUBKEY_PERSONAL`, `RELAY_PUBKEY_WORK`, `WEBHOOK_HOST_ALLOWLIST`, `VIEWER_ORIGIN`, `VIEWER_USER`, `NOTION_WEBHOOK_VERIFICATION_TOKEN`, `NOTION_BOT_PORTAL_TOKEN`, `BOT_PORTAL_MESSAGES_DS`, `BOT_PORTAL_THREADS_DS` (or `_DB`), `BOT_PORTAL_WEBHOOK_URL`, `BOT_PORTAL_WEBHOOK_AUTH`, `WORK_BOTS` |
-| `texts-relay` / `legacy-sendblue` | *(retired)* formerly `TEXTS_ALLOWED_NUMBERS`, `TEXTS_AGENT_ID`, `pull.url` / `pull.secret`, `webhook.secret` — live Mac watcher keeps wake auth on the Mac only |
+| `texts-relay` | `TEXTS_ALLOWED_NUMBERS`, `TEXTS_AGENT_ID`, `pull.url` / `pull.secret`, `webhook.secret` (gitignored beside the scripts) |
 | `saved-tweets` | `NOTION_API_TOKEN` (or `NOTION_ENV_FILE`), `SAVED_TWEETS_SKIP_PAGES` |
 | `capture-digest` | `DIGEST_IN`, `DIGEST_OUT` |
 | `bill-email-scan` | `JEV_API_KEY` (or `JEV_API_KEY_FILE` / `--key-file`) |
