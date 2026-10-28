@@ -1,0 +1,7 @@
+progress.json
+progress_*.json
+*.tmp
+cache/
+__pycache__/
+*.pyc
+.env
